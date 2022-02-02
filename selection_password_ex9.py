@@ -21,7 +21,7 @@ for i in passwords:
         'password': i
     }
     cookie = dict(requests.post(URL_ONE, data=data).cookies)
-    new_response = requests.post(URL_TWO, data=cookie).text
+    new_response = requests.post(URL_TWO, cookies=cookie).text
     if new_response == 'You are authorized':
         print(f"{i} You are authorized")
 
