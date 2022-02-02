@@ -1,3 +1,4 @@
+# Задание 8
 import requests
 import time
 URL = 'https://playground.learnqa.ru/ajax/api/longtime_job'
