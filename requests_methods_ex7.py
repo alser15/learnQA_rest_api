@@ -1,3 +1,4 @@
+# Задание 7
 import requests
 from json.decoder import JSONDecodeError
 
