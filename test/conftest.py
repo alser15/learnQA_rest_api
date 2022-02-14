@@ -22,6 +22,6 @@ def create_login_delete_user(data):
     yield response
 
     #Удаление юзера
-    MyRequests.delete(f'https://playground.learnqa.ru/api/user/{response.json()["user_id"]}',
+    MyRequests.delete(f'/user/{response.json()["user_id"]}',
                             headers={'x-csrf-token':response.headers['x-csrf-token']},
                             cookies={'auth_sid':response.cookies['auth_sid']})
