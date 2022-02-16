@@ -1,4 +1,7 @@
+import allure
 import requests
+
+from lib.logger import Logger
 
 
 class MyRequests:
@@ -7,28 +10,32 @@ class MyRequests:
             data: dict=None,
             headers: dict=None,
             cookies: dict=None):
-        return MyRequests.send_request(url, data, headers, cookies, 'GET')
+        with allure.step(f'Отправит GET запрос на {url}'):
+            return MyRequests.send_request(url, data, headers, cookies, 'GET')
 
     @staticmethod
     def post(url: str,
             data: dict = None,
             headers: dict = None,
             cookies: dict = None):
-        return MyRequests.send_request(url, data, headers, cookies, 'POST')
+        with allure.step(f'Отправит POST запрос на {url}'):
+            return MyRequests.send_request(url, data, headers, cookies, 'POST')
 
     @staticmethod
     def put(url: str,
             data: dict = None,
             headers: dict = None,
             cookies: dict = None):
-        return MyRequests.send_request(url, data, headers, cookies, 'PUT')
+        with allure.step(f'Отправит PUT запрос на {url}'):
+            return MyRequests.send_request(url, data, headers, cookies, 'PUT')
 
     @staticmethod
     def delete(url: str,
             data: dict = None,
             headers: dict = None,
             cookies: dict = None):
-        return MyRequests.send_request(url, data, headers, cookies, 'DELETE')
+        with allure.step(f'Отправит DELETE запрос на {url}'):
+            return MyRequests.send_request(url, data, headers, cookies, 'DELETE')
 
     @staticmethod
     def send_request(url: str,
@@ -43,6 +50,7 @@ class MyRequests:
         if cookies is None:
             cookies = {}
 
+        Logger.add_request(url, data, headers, cookies, method)
         if method == "GET":
             response = requests.get(url,
                                     params=data,
@@ -65,5 +73,7 @@ class MyRequests:
                                     cookies=cookies)
         else:
             raise Exception(f'Неверный метод {method}')
+
+        Logger.add_response(response)
 
         return response
